@@ -1,0 +1,1 @@
+from .grobid import GROBIDProcessor

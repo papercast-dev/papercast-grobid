@@ -1,4 +1,5 @@
 import logging
+import math
 import string
 import subprocess
 import time
@@ -6,13 +7,12 @@ import urllib
 from dataclasses import dataclass
 from typing import Any, Dict, List
 
-import numpy as np
 import pdfplumber
 from pdf2image import convert_from_path
 from pdfplumber.page import CroppedPage
 from scipdf import parse_pdf, parse_pdf_to_dict
 
-from papercast.processors.base import BaseProcessor
+from papercast.base import BaseProcessor
 from papercast.production import Production
 from papercast.types import Author, PDFFile
 
@@ -124,10 +124,10 @@ class GROBIDProcessor(BaseProcessor):
         page, x0, y0, width, height = coords
         bbox = PDFBBox(
             int(page),
-            float(np.round(x0)),
-            float(np.round(y0)),
-            float(np.round(x0)) + float(np.round(width)),
-            float(np.round(y0)) + float(np.round(height)),
+            float(math.floor(x0)),
+            float(math.floor(y0)),
+            float(math.floor(x0)) + float(math.floor(width)),
+            float(math.floor(y0)) + float(math.floor(height)),
         )
         self.logger.info(f"Got bbox {bbox} for {tei_obj}")
         return bbox
