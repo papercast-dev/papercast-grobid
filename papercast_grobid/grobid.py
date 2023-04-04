@@ -27,11 +27,8 @@ class PDFBBox:
 
 
 class GROBIDProcessor(BaseProcessor):
-    def input_types(self) -> Dict[str, Any]:
-        return {"pdf": PDFFile}
-
-    def output_types(self) -> Dict[str, Any]:
-        return {
+    input_types = {"pdf": PDFFile}
+    output_types = {
             "title": str,
             "authors": List,
             "doi": str,
@@ -174,7 +171,7 @@ class GROBIDProcessor(BaseProcessor):
     def process(self, input: Production, method=None, **kwargs) -> Production:
 
         # TODO move to base class
-        for input_attr in self.input_types():
+        for input_attr in self.input_types:
             if not hasattr(input, input_attr):
                 raise AttributeError(
                     f"Input object {input} does not have attribute {input_attr}"
