@@ -82,6 +82,9 @@ class GROBIDProcessor(BaseProcessor):
 
         setattr(production, "metadata", metadata)
         setattr(production, "text", text)
+        setattr(production, "title", article_dict["title"])
+        setattr(production, "abstract", article_dict["abstract"])
+        setattr(production, "description", article_dict["abstract"])
         setattr(production, "article_dict", article_dict)
         return production
 
