@@ -1,1 +1,1 @@
-from .grobid import GROBIDProcessor
+from .processors import GROBIDProcessor

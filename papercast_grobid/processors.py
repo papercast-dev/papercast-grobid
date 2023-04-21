@@ -29,15 +29,15 @@ class PDFBBox:
 class GROBIDProcessor(BaseProcessor):
     input_types = {"pdf": PDFFile}
     output_types = {
-            "title": str,
-            "authors": List,
-            "doi": str,
-            "description": str,
-            "abstract": str,
-            "text": str,
-            "figures": List[CroppedPage],
-            "equations": List[CroppedPage],
-        }
+        "title": str,
+        "authors": List,
+        "doi": str,
+        "description": str,
+        "abstract": str,
+        "text": str,
+        "figures": List[CroppedPage],
+        "equations": List[CroppedPage],
+    }
 
     def __init__(
         self,
@@ -45,6 +45,7 @@ class GROBIDProcessor(BaseProcessor):
         serve_grobid_script="~/scipdf_parser/serve_grobid.sh",
         grobid_url="http://localhost:8070/",
     ):
+        super().__init__()
         self.serve_grobid_script = serve_grobid_script
         self.remove_non_printable_chars = remove_non_printable_chars
         self.grobid_url = grobid_url
@@ -172,7 +173,6 @@ class GROBIDProcessor(BaseProcessor):
         return production
 
     def process(self, input: Production, method=None, **kwargs) -> Production:
-
         # TODO move to base class
         for input_attr in self.input_types:
             if not hasattr(input, input_attr):
@@ -210,6 +210,7 @@ class GROBIDProcessor(BaseProcessor):
             cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL
         )
         while not self._grobid_online():
+            self.logger.info("Waiting for grobid to start...")
             time.sleep(1)
 
     def _grobid_online(self):
